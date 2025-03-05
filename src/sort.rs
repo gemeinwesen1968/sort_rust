@@ -1,43 +1,34 @@
-pub fn merge_sort(vec: &Vec<i32>) -> Vec<i32> {
+use std::fmt::Debug;
+
+pub fn merge_sort<T: PartialOrd + Clone + Debug>(vec: &Vec<T>) -> Vec<T> {
     if vec.len() < 2 {
         vec.to_vec()
     } else {
         let size: usize = vec.len() / 2;
-        let left: Vec<i32> = merge_sort(&vec[0..size].to_vec());
-        let right: Vec<i32> = merge_sort(&vec[size..].to_vec());
-        let merged: Vec<i32> = merge(&left, &right);
+        let left: Vec<T> = merge_sort(&vec[0..size].to_vec());
+        let right: Vec<T> = merge_sort(&vec[size..].to_vec());
+        let merged: Vec<T> = merge(&left, &right);
         merged
     }
 }
 
-fn merge(left: &Vec<i32>, right: &Vec<i32>) -> Vec<i32> {
+fn merge<T: PartialOrd + Clone>(left: &Vec<T>, right: &Vec<T>) -> Vec<T> {
     let mut i: usize = 0;
     let mut j: usize = 0;
-    let mut merged: Vec<i32> = Vec::new();
+    let mut merged: Vec<T> = Vec::new();
 
     while i < left.len() && j < right.len() {
         if left[i] < right[j] {
-            merged.push(left[i]);
+            merged.push(left[i].clone());
             i = i + 1;
         } else {
-            merged.push(right[j]);
+            merged.push(right[j].clone());
             j = j + 1;
         }
     }
 
-    if i < left.len() {
-        while i < left.len() {
-            merged.push(left[i]);
-            i = i + 1;
-            }
-        }
-
-    if j < right.len() {
-        while j < right.len() {
-            merged.push(right[j]);
-            j = j + 1;
-        }
-    }
+    merged.extend(left[i..].iter().cloned());
+    merged.extend(right[j..].iter().cloned());
 
     merged
 }

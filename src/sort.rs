@@ -32,3 +32,18 @@ fn merge<T: PartialOrd + Clone>(left: &Vec<T>, right: &Vec<T>) -> Vec<T> {
 
     merged
 }
+
+pub fn selection_sort<T: PartialOrd + Clone + Debug>(vec: &Vec<T>) -> Vec<T> {
+    let size: usize = vec.len();
+    let mut v: Vec<T> = vec.clone();
+    for i in 0..size {
+        let mut min_index: usize = i;
+        for j in i + 1..size {
+            if v.get(j) < v.get(min_index) {
+                min_index = j;
+            }
+        }
+        v.swap(i, min_index);
+    }
+    v
+} 

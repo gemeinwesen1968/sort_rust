@@ -12,9 +12,9 @@ where
     let vals: Vec<T> = (0..size).map(|_| T::from(rng.random_range(-offset..offset))).collect();
     let sorted: Vec<T> = generator(&vals);
     println!("{:?}", vals);
-    println!("{:?}\n", sorted);
+    println!("{:?}", sorted);
 }
 
 fn main() {
-    test(20, 1000, sort::merge_sort::<i32>);
+    test(20, 1000, sort::selection_sort::<i32>);
 }
